@@ -29,23 +29,25 @@ function makeSmokeTexture() {
 
 // A classic high-wing propeller plane, the kind that tows banners over a ceremony.
 function makePlane(phone) {
+  // Phones get a light plane: Lambert shading instead of physically based, no rim lights, fewer segments.
+  const surface = ({ roughness, metalness, ...rest }) => phone ? new THREE.MeshLambertMaterial(rest) : new THREE.MeshStandardMaterial({ roughness, metalness, ...rest });
+  const seg = (full, lite) => (phone ? lite : full);
   const group = new THREE.Group();
-  const cream = new THREE.MeshStandardMaterial({ color: '#f7f2e4', roughness: 0.5, metalness: 0.05, emissive: '#8a8676', emissiveIntensity: 0.55 });
-  const red = new THREE.MeshStandardMaterial({ color: '#d8453a', roughness: 0.4, metalness: 0.2 });
-  const navy = new THREE.MeshStandardMaterial({ color: '#24425e', roughness: 0.4, metalness: 0.3 });
-  const dark = new THREE.MeshStandardMaterial({ color: '#1b232c', roughness: 0.7, metalness: 0.3 });
-  // Clearcoat roughly doubles the shader's size and compile time; phones get the plain glossy material.
+  const cream = surface({ color: '#f7f2e4', roughness: 0.5, metalness: 0.05, emissive: '#8a8676', emissiveIntensity: 0.55 });
+  const red = surface({ color: '#d8453a', roughness: 0.4, metalness: 0.2 });
+  const navy = surface({ color: '#24425e', roughness: 0.4, metalness: 0.3 });
+  const dark = surface({ color: '#1b232c', roughness: 0.7, metalness: 0.3 });
   const glassOptions = { color: '#7fc4d2', emissive: '#16424d', emissiveIntensity: 0.5, metalness: 0.2, roughness: 0.1 };
-  const glass = phone ? new THREE.MeshStandardMaterial(glassOptions) : new THREE.MeshPhysicalMaterial({ ...glassOptions, clearcoat: 1 });
+  const glass = phone ? surface(glassOptions) : new THREE.MeshPhysicalMaterial({ ...glassOptions, clearcoat: 1 });
 
-  const fuselage = new THREE.Mesh(new THREE.CapsuleGeometry(11, 96, 8, 20), cream);
+  const fuselage = new THREE.Mesh(new THREE.CapsuleGeometry(11, 96, seg(8, 4), seg(20, 10)), cream);
   fuselage.rotation.z = -Math.PI / 2;
   group.add(fuselage);
-  const band = new THREE.Mesh(new THREE.CylinderGeometry(11.6, 11.6, 14, 24, 1, true), navy);
+  const band = new THREE.Mesh(new THREE.CylinderGeometry(11.6, 11.6, 14, seg(24, 12), 1, true), navy);
   band.rotation.z = -Math.PI / 2;
   band.position.x = -14;
   group.add(band);
-  const cowling = new THREE.Mesh(new THREE.SphereGeometry(11.6, 20, 14), red);
+  const cowling = new THREE.Mesh(new THREE.SphereGeometry(11.6, seg(20, 10), seg(14, 8)), red);
   cowling.scale.set(1.15, 1, 1);
   cowling.position.x = 50;
   group.add(cowling);
@@ -53,12 +55,12 @@ function makePlane(phone) {
   // Propeller (spun by the caller) with a faint blur disc.
   const propeller = new THREE.Group();
   propeller.position.x = 66;
-  const hub = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 3.4, 7, 14), new THREE.MeshStandardMaterial({ color: '#e1bb73', metalness: 0.7, roughness: 0.3 }));
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 3.4, 7, seg(14, 8)), surface({ color: '#e1bb73', metalness: 0.7, roughness: 0.3 }));
   hub.rotation.z = -Math.PI / 2;
   propeller.add(hub);
   propeller.add(new THREE.Mesh(new THREE.BoxGeometry(2.2, 52, 6), dark));
   propeller.add(new THREE.Mesh(new THREE.BoxGeometry(2.2, 6, 52), dark));
-  const blur = new THREE.Mesh(new THREE.CircleGeometry(26, 32), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
+  const blur = new THREE.Mesh(new THREE.CircleGeometry(26, seg(32, 16)), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
   blur.rotation.y = Math.PI / 2;
   propeller.add(blur);
   group.add(propeller);
@@ -86,7 +88,7 @@ function makePlane(phone) {
     group.add(tip);
     const from = new THREE.Vector3(16, 0, -8);
     const to = new THREE.Vector3(16, side * 50, 10);
-    const strut = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, from.distanceTo(to), 8), dark);
+    const strut = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, from.distanceTo(to), seg(8, 5)), dark);
     strut.position.copy(from).lerp(to, 0.5);
     strut.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(from).normalize());
     group.add(strut);
@@ -114,11 +116,11 @@ function makePlane(phone) {
   group.add(fin);
 
   // Windscreen, side windows, landing gear.
-  const canopy = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 10), glass);
+  const canopy = new THREE.Mesh(new THREE.SphereGeometry(1, seg(16, 10), seg(10, 6)), glass);
   canopy.scale.set(16, 8.5, 7);
   canopy.position.set(30, 0, 7);
   group.add(canopy);
-  const windowGeometry = new THREE.SphereGeometry(1, 10, 8);
+  const windowGeometry = new THREE.SphereGeometry(1, seg(10, 6), seg(8, 5));
   for (const side of [-1, 1]) {
     for (const x of [4, 20]) {
       const cabinWindow = new THREE.Mesh(windowGeometry, glass);
@@ -128,21 +130,23 @@ function makePlane(phone) {
     }
     const legFrom = new THREE.Vector3(22, side * 6, -9);
     const legTo = new THREE.Vector3(22, side * 14, -21);
-    const leg = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, legFrom.distanceTo(legTo), 8), dark);
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, legFrom.distanceTo(legTo), seg(8, 5)), dark);
     leg.position.copy(legFrom).lerp(legTo, 0.5);
     leg.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), legTo.clone().sub(legFrom).normalize());
     group.add(leg);
-    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(6.5, 6.5, 4, 18), dark);
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(6.5, 6.5, 4, seg(18, 10)), dark);
     wheel.position.set(22, side * 15, -21);
     group.add(wheel);
   }
 
-  const cyanRim = new THREE.PointLight(0x9be3e5, 5.5, 430, 1.5);
-  cyanRim.position.set(5, 22, 76);
-  group.add(cyanRim);
-  const warmRim = new THREE.PointLight(0xffcc82, 3.1, 320, 1.6);
-  warmRim.position.set(-47, -20, 34);
-  group.add(warmRim);
+  if (!phone) {
+    const cyanRim = new THREE.PointLight(0x9be3e5, 5.5, 430, 1.5);
+    cyanRim.position.set(5, 22, 76);
+    group.add(cyanRim);
+    const warmRim = new THREE.PointLight(0xffcc82, 3.1, 320, 1.6);
+    warmRim.position.set(-47, -20, 34);
+    group.add(warmRim);
+  }
 
   return { group, propeller };
 }
@@ -264,7 +268,7 @@ export function createScene({ canvas }) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.12;
   renderer.setClearColor('#05090d', 0);
-  let pixelCap = window.innerWidth < 640 ? 1.15 : 1.55;
+  let pixelCap = window.innerWidth < 640 ? 1 : 1.55;
   renderer.setPixelRatio(Math.min(initialDpr, pixelCap));
 
   scene.add(new THREE.HemisphereLight(0x99b4c6, 0x10151a, 1.05));
@@ -292,7 +296,7 @@ export function createScene({ canvas }) {
   aircraft.add(airliner, banner.group);
   flightGroup.add(aircraft);
   const smokeTexture = makeSmokeTexture();
-  const smokeCount = phone ? 80 : 128;
+  const smokeCount = phone ? 48 : 128;
   const smokeGeometry = makeSmokeGeometry(smokeCount);
   const smokeMaterial = new THREE.ShaderMaterial({
     uniforms: { uMap: { value: smokeTexture }, uTint: { value: new THREE.Color('#fffbed') } },
@@ -375,7 +379,7 @@ export function createScene({ canvas }) {
     camera.aspect = viewportWidth / viewportHeight;
     camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(viewportHeight / (2 * cameraDistance)));
     camera.updateProjectionMatrix();
-    pixelCap = viewportWidth < 640 ? 1.15 : 1.55;
+    pixelCap = viewportWidth < 640 ? 1 : 1.55;
     renderer.setPixelRatio(lowered ? 1 : Math.min(window.devicePixelRatio || 1, pixelCap));
     renderer.setSize(viewportWidth, viewportHeight, false);
     rings.scale.set(Math.max(0.6, Math.min(1.35, viewportWidth / 900)), Math.max(0.65, Math.min(1.4, viewportHeight / 640)), 1);
@@ -488,16 +492,21 @@ export function createScene({ canvas }) {
     renderer.dispose();
   }
 
-  // The first visible frame of the flight used to link eight shader programs and upload two textures in one
-  // go, a long stall on phones. Do that work now,
-  // while the check-in screen is idle: show the flight for the compile, then hide it again.
+  // The first frames of the flight used to compile shaders and upload textures as each part of the plane
+  // came on screen, a long stall on phones. Compiling ahead is not enough: Safari and ANGLE finish a shader
+  // only at its first draw. So, while the check-in screen is idle, draw the whole flight once into a single
+  // pixel, with the aircraft parked mid-screen so no part is culled, then hide it again.
   function warmFlight() {
     if (disposed) return;
     flightGroup.visible = true;
-    renderer.compileAsync(scene, camera).catch(() => {});
+    aircraft.position.set(0, 0, 0);
+    aircraft.rotation.set(0, 0, 0);
+    aircraft.scale.setScalar(0.4);
+    renderer.setScissorTest(true);
+    renderer.setScissor(0, 0, 1, 1);
+    renderer.render(scene, camera);
+    renderer.setScissorTest(false);
     flightGroup.visible = false;
-    renderer.initTexture(banner.texture);
-    renderer.initTexture(smokeTexture);
   }
 
   resize();
