@@ -28,13 +28,15 @@ function makeSmokeTexture() {
 }
 
 // A classic high-wing propeller plane, the kind that tows banners over a ceremony.
-function makePlane() {
+function makePlane(phone) {
   const group = new THREE.Group();
   const cream = new THREE.MeshStandardMaterial({ color: '#f7f2e4', roughness: 0.5, metalness: 0.05, emissive: '#8a8676', emissiveIntensity: 0.55 });
   const red = new THREE.MeshStandardMaterial({ color: '#d8453a', roughness: 0.4, metalness: 0.2 });
   const navy = new THREE.MeshStandardMaterial({ color: '#24425e', roughness: 0.4, metalness: 0.3 });
   const dark = new THREE.MeshStandardMaterial({ color: '#1b232c', roughness: 0.7, metalness: 0.3 });
-  const glass = new THREE.MeshPhysicalMaterial({ color: '#7fc4d2', emissive: '#16424d', emissiveIntensity: 0.5, metalness: 0.2, roughness: 0.1, clearcoat: 1 });
+  // Clearcoat roughly doubles the shader's size and compile time; phones get the plain glossy material.
+  const glassOptions = { color: '#7fc4d2', emissive: '#16424d', emissiveIntensity: 0.5, metalness: 0.2, roughness: 0.1 };
+  const glass = phone ? new THREE.MeshStandardMaterial(glassOptions) : new THREE.MeshPhysicalMaterial({ ...glassOptions, clearcoat: 1 });
 
   const fuselage = new THREE.Mesh(new THREE.CapsuleGeometry(11, 96, 8, 20), cream);
   fuselage.rotation.z = -Math.PI / 2;
@@ -146,18 +148,24 @@ function makePlane() {
 }
 
 // A banner towed behind the plane. Its right edge is pinned to the tail; the free end ripples.
-function makeBanner() {
+// The banner covers well under 300 px of a phone screen, so a phone gets a half-size texture. It is drawn at
+// 1:1 and never minified, so it needs no mipmaps (building them costs time and a third more memory).
+function makeBanner(phone) {
   const canvas = document.createElement('canvas');
-  canvas.width = 1680;
-  canvas.height = 220;
+  const bannerScale = phone ? 0.5 : 1;
+  canvas.width = Math.round(1680 * bannerScale);
+  canvas.height = Math.round(220 * bannerScale);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
   const paint = () => {
     const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.setTransform(bannerScale, 0, 0, bannerScale, 0, 0);
+    context.clearRect(0, 0, 1680, 220);
     context.fillStyle = '#f8f1de';
     context.beginPath();
-    context.roundRect(8, 12, canvas.width - 16, 196, 16);
+    context.roundRect(8, 12, 1680 - 16, 196, 16);
     context.fill();
     context.strokeStyle = '#d6b46e';
     context.lineWidth = 9;
@@ -167,12 +175,12 @@ function makeBanner() {
     let size = 78;
     do {
       context.font = `700 ${size}px "Space Grotesk", system-ui, sans-serif`;
-      if (context.measureText(message).width <= canvas.width - 140) break;
+      if (context.measureText(message).width <= 1680 - 140) break;
       size -= 2;
     } while (size > 40);
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(message, canvas.width / 2, 112);
+    context.fillText(message, 1680 / 2, 112);
     texture.needsUpdate = true;
   };
   paint();
@@ -198,6 +206,7 @@ function makeBanner() {
   const positions = geometry.attributes.position;
   return {
     group,
+    texture,
     update(time) {
       for (let index = 0; index < positions.count; index += 1) {
         const u = (base[index * 3] + width / 2) / width; // 0 at the free end, 1 at the tail
@@ -274,15 +283,16 @@ export function createScene({ canvas }) {
   flightGroup.visible = false;
   world.add(flightGroup);
   const aircraft = new THREE.Group(); // position and heading
-  const plane = makePlane();
+  const phone = window.innerWidth < 640;
+  const plane = makePlane(phone);
   const airliner = plane.group;
   airliner.scale.setScalar(1.05);
   airliner.rotation.x = 1.3; // restrained side profile, keeping the wing out of the ticket's path
-  const banner = makeBanner();
+  const banner = makeBanner(phone);
   aircraft.add(airliner, banner.group);
   flightGroup.add(aircraft);
   const smokeTexture = makeSmokeTexture();
-  const smokeCount = window.innerWidth < 640 ? 80 : 128;
+  const smokeCount = phone ? 80 : 128;
   const smokeGeometry = makeSmokeGeometry(smokeCount);
   const smokeMaterial = new THREE.ShaderMaterial({
     uniforms: { uMap: { value: smokeTexture }, uTint: { value: new THREE.Color('#fffbed') } },
@@ -478,6 +488,19 @@ export function createScene({ canvas }) {
     renderer.dispose();
   }
 
+  // The first visible frame of the flight used to link eight shader programs and upload two textures in one
+  // go, a long stall on phones. Do that work now,
+  // while the check-in screen is idle: show the flight for the compile, then hide it again.
+  function warmFlight() {
+    if (disposed) return;
+    flightGroup.visible = true;
+    renderer.compileAsync(scene, camera).catch(() => {});
+    flightGroup.visible = false;
+    renderer.initTexture(banner.texture);
+    renderer.initTexture(smokeTexture);
+  }
+
   resize();
+  window.setTimeout(warmFlight, 500);
   return { available: true, render, resize, dispose };
 }
