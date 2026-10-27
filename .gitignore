@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.superpowers/sdd/
+.playwright-mcp/
+.env
+.env.local
+.env.*.local
+.vercel/
+
+# Local design tools and generated review artifacts
+.claude/
+.impeccable/
+output/
+/*.png

@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#3f8fe0" />
+    <meta name="description" content="Lời mời tốt nghiệp của Lê Quốc Bảo, gửi qua một chuyến bay đến chương tiếp theo." />
+    <title>Flight to the Future — Thiệp mời tốt nghiệp</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="preload" href="/src/assets/fonts/space-grotesk-vietnamese-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-mono-vietnamese-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <main id="app" data-scene="name">
+      <div class="warmth" id="warmth" aria-hidden="true">
+        <i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i><i class="cloud c4"></i><i class="cloud c5"></i>
+      </div>
+      <canvas id="sceneCanvas" aria-hidden="true"></canvas>
+      <div class="scene-wash" aria-hidden="true"></div>
+      <div class="screen-grain" aria-hidden="true"></div>
+      <div class="alarm" id="alarm" aria-hidden="true"></div>
+      <div class="white-flash" id="whiteFlash" aria-hidden="true"></div>
+      <div class="flyby-clouds" id="flybyClouds" aria-hidden="true"><i></i><i></i></div>
+      <!-- Scene 0 backdrop: check-in hall. The traveller (a copy of the mascot) walks in, the attendant greets, types and stamps. -->
+      <div class="lobby" id="lobby" aria-hidden="true">
+        <div class="lobby-glass"></div>
+        <div class="lobby-floor"></div>
+        <div class="lobby-hero" id="lobbyHero"><div class="lobby-hero-step" id="lobbyHeroStep">
+          <svg class="lobby-case" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38 38 98 6" stroke="#0b1c38" stroke-width="7" stroke-linecap="round" /><path d="M38 38 98 6" stroke="#9fb3c9" stroke-width="3" stroke-linecap="round" />
+            <rect x="6" y="36" width="62" height="56" rx="9" fill="#1f4378" stroke="#0b1c38" stroke-width="4" />
+            <path d="M26 36v56m16-56v56" stroke="#15305a" stroke-width="3" /><rect x="6" y="52" width="62" height="6" fill="#f0b429" opacity=".9" />
+            <circle cx="52" cy="76" r="7" fill="#fff9ea" stroke="#0b1c38" stroke-width="2.5" /><path d="m49 76 3-5 3 5z" fill="#1f4378" />
+            <circle cx="18" cy="94" r="5" fill="#0b1c38" /><circle cx="56" cy="94" r="5" fill="#0b1c38" />
+          </svg>
+        </div></div>
+        <div class="lobby-attendant" id="lobbyAttendant">
+          <svg viewBox="0 0 220 250" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="100" cy="244" rx="92" ry="7" fill="#0b2a52" opacity=".22" />
+            <g class="att-body">
+              <path d="M58 178Q52 134 84 124h32q32 10 26 54Z" fill="#1c3a69" stroke="#0b1c38" stroke-width="4.5" stroke-linejoin="round" />
+              <path d="m88 124 12 22 12-22Z" fill="#fff9ea" />
+              <path d="m84 123 16 17 16-17-8-4-8 7-8-7Z" fill="#f0b429" stroke="#9a6d12" stroke-width="2" stroke-linejoin="round" />
+              <path d="M76 142 68 170m64-28 8 28" stroke="#2d558f" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              <circle cx="122" cy="150" r="3.2" fill="#f0b429" stroke="#9a6d12" stroke-width="1" />
+              <g class="att-head">
+                <path d="M56 80Q52 42 100 40q48 2 44 40l4 40q-14 10-22-6l-52 0q-8 16-22 6Z" fill="#2a2030" stroke="#150f1a" stroke-width="4" stroke-linejoin="round" />
+                <ellipse cx="100" cy="86" rx="41" ry="43" fill="#FFD9B7" stroke="#915F50" stroke-width="4" />
+                <path d="M61 82Q62 56 100 54q38 2 39 28-16-14-39-14-23 0-39 14Z" fill="#2a2030" />
+                <path d="M72 52Q76 24 102 22q28 2 30 32-30-12-60-2Z" fill="#1c3a69" stroke="#0b1c38" stroke-width="3.5" stroke-linejoin="round" />
+                <path d="M71 53q31-12 61 0l-1 7q-30-11-59 0Z" fill="#f0b429" stroke="#9a6d12" stroke-width="2" stroke-linejoin="round" />
+                <path d="m96 34 6-5 6 5-6 6Z" fill="#fff9ea" stroke="#9a6d12" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M78 80q8-5 15 0m17 0q8-5 15 0" fill="none" stroke="#273243" stroke-width="4" stroke-linecap="round" />
+                <g class="att-eyes"><g class="att-blink"><circle cx="86" cy="92" r="4.8" fill="#1E3449" /><circle cx="114" cy="92" r="4.8" fill="#1E3449" /></g></g>
+                <ellipse cx="73" cy="104" rx="9" ry="4.5" fill="#F49E9C" opacity=".55" /><ellipse cx="127" cy="104" rx="9" ry="4.5" fill="#F49E9C" opacity=".55" />
+                <path d="M90 105q10 11 20 0" fill="none" stroke="#9A514E" stroke-width="3.6" stroke-linecap="round" />
+              </g>
+            </g>
+            <!-- Right arm: holds up a boarding pass, waves at the traveller, and stamps it when the form is sent. -->
+            <g class="att-arm-r">
+              <path d="M128 140Q152 146 158 120" stroke="#0b1c38" stroke-width="22" stroke-linecap="round" fill="none" /><path d="M128 140Q152 146 158 120" stroke="#1c3a69" stroke-width="15" stroke-linecap="round" fill="none" />
+              <g transform="rotate(8 170 96)">
+                <rect x="150" y="48" width="40" height="58" rx="5" fill="#fffdf6" stroke="#0b1c38" stroke-width="3.5" />
+                <rect x="150" y="48" width="40" height="13" rx="5" fill="#1c3a69" /><path d="M156 55h12" stroke="#f0b429" stroke-width="3" stroke-linecap="round" />
+                <path d="m178 76 6 3-6 3v-2l-8 0 0-2 8 0Z" fill="#1c3a69" /><path d="M156 74h14m-14 7h10m-10 7h18m-18 7h12" stroke="#b4c3d6" stroke-width="2.4" stroke-linecap="round" />
+                <g class="att-mark"><rect x="153" y="80" width="34" height="14" rx="3" fill="none" stroke="#d93a3a" stroke-width="2.4" /><text x="170" y="90.6" text-anchor="middle" font-size="7.6" font-weight="800" fill="#d93a3a" font-family="system-ui, sans-serif">ĐÃ DUYỆT</text></g>
+              </g>
+              <circle cx="159" cy="116" r="9" fill="#FFD9B7" stroke="#915F50" stroke-width="3" />
+            </g>
+            <!-- Desk -->
+            <path d="M10 168h180l6 76H4Z" fill="#1c3a69" stroke="#0b1c38" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M14 196h172" stroke="#f0b429" stroke-width="5" />
+            <text x="100" y="226" text-anchor="middle" font-size="10" font-weight="700" fill="#f6dd9a" font-family="IBM Plex Mono, Consolas, monospace" letter-spacing="1.6">CHECK-IN</text>
+            <rect x="2" y="156" width="196" height="16" rx="7" fill="#f4efe2" stroke="#0b1c38" stroke-width="4.5" />
+            <rect x="30" y="146" width="44" height="11" rx="3" fill="#cfd8e3" stroke="#0b1c38" stroke-width="3" /><path d="M38 151.5h4m6 0h4m6 0h4" stroke="#3b4f6b" stroke-width="2.6" stroke-linecap="round" /><circle class="att-led" cx="68" cy="151.5" r="2.2" fill="#54d68a" />
+            <!-- Left arm: taps the check-in terminal while the guest types. -->
+            <g class="att-arm-l">
+              <path d="M76 140Q56 150 62 150" stroke="#0b1c38" stroke-width="22" stroke-linecap="round" fill="none" /><path d="M76 140Q56 150 62 150" stroke="#1c3a69" stroke-width="15" stroke-linecap="round" fill="none" />
+              <circle cx="56" cy="150" r="9" fill="#FFD9B7" stroke="#915F50" stroke-width="3" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <header class="topbar">
+        <div class="flightbar" id="flightbar" aria-hidden="true">
+          <div class="fb-track"><i class="fb-fill"></i><span class="fb-plane"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12 3 5l3 7-3 7 18-7Z" fill="currentColor"/></svg></span></div>
+          <ol class="fb-steps"><li>CHECK-IN</li><li>LĂN BÁNH</li><li>CẤT CÁNH</li><li>TRÊN KHÔNG</li><li>HẠ CÁNH</li></ol>
+        </div>
+        <button id="skip" class="skip" type="button">Bỏ qua <span aria-hidden="true">↗</span></button>
+      </header>
+
+      <div class="sound-control">
+      <button id="soundToggle" class="sound-toggle" type="button" aria-label="Tắt nhạc" aria-pressed="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m11 4-5 4H3v8h3l5 4V4Z"/><g class="sound-waves"><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></g><path class="sound-cross" d="m15 9 6 6m0-6-6 6"/></svg>
+        <span>Tắt nhạc</span>
+      </button>
+      <a class="sound-credit" href="/credits.html" target="_blank" rel="noopener" aria-label="Thông tin âm thanh" title="Thông tin âm thanh"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 9v5m0-8v.1" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <!-- Scene 0: nhập tên người nhận -->
+      <section class="name-gate" id="nameGate" aria-labelledby="nameTitle">
+        <form class="name-card" id="nameForm" autocomplete="off">
+          <div class="checkin-top"><span>✈ GRAD AIRWAYS</span><span>QUẦY CHECK-IN</span></div>
+          <p class="eyebrow"><span>CHUYẾN BAY GRAD-2026</span><span class="eyebrow-code">CỔNG UIT</span></p>
+          <h1 id="nameTitle">Hành khách tên gì nhỉ?</h1>
+          <p class="name-copy">Khai tên để cơ trưởng gọi loa (hứa không đọc nhầm).</p>
+          <label class="name-label" for="nameInput">TÊN HÀNH KHÁCH · PASSENGER</label>
+          <input id="nameInput" class="name-input" type="text" name="guest" maxlength="30" placeholder="Nhập tên của bạn" autocomplete="given-name" enterkeyhint="go" />
+          <button class="primary" type="submit"><span>Làm thủ tục</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+          <p class="sound-note">Chuyến đi có nhạc nền. Bạn có thể tắt ở góc màn hình.</p>
+          <p class="name-note"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5 14 4v4.2c0 3-2.4 5.3-6 6.3-3.6-1-6-3.3-6-6.3V4l6-2.5Z" fill="currentColor" opacity=".18"/><path d="M8 1.5 14 4v4.2c0 3-2.4 5.3-6 6.3-3.6-1-6-3.3-6-6.3V4l6-2.5Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="m5.4 8.2 1.9 1.9 3.5-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tên chỉ được gửi cho cơ trưởng khi bạn bấm “Xác nhận có mặt”.</span></p>
+        </form>
+      </section>
+
+      <!-- Scene 3: máy bị xâm nhập (hư cấu) -->
+      <canvas class="matrix" id="matrix" aria-hidden="true"></canvas>
+      <section class="terminal" id="terminal" aria-hidden="true">
+        <div class="term-panel" id="termPanel">
+          <div class="term-head"><span class="term-dot"></span> ĐANG XÂM NHẬP THIẾT BỊ</div>
+          <div class="term-lines" id="termLines"></div>
+          <div class="term-progress">
+            <div class="term-progress-top"><span>TẢI LÊN MÁY CHỦ</span><b id="termPct">0%</b></div>
+            <div class="term-bar"><i id="termBar"></i><u id="termHead"></u></div>
+            <div class="term-progress-meta"><span id="termFiles">Đã gửi 0 / 4.269 tệp</span><span id="termRate">0,0 MB/s</span></div>
+          </div>
+        </div>
+      </section>
+      <div class="access" id="access" aria-hidden="true">
+        <p class="access-kicker">&gt; ROOT@ĐIỆN-THOẠI-CỦA-BẠN</p>
+        <h2>TRUY CẬP<br />THÀNH CÔNG</h2>
+        <p class="access-sub" id="accessSub">ĐÃ VÀO ĐƯỢC HỆ THỐNG</p>
+      </div>
+
+      <!-- Scene 4: báo động giả -->
+      <section class="alert-stage" id="alertStage" aria-hidden="true">
+        <div class="alarm-banner" id="alarmBanner"><div class="alarm-marquee"><span>⚠ CẢNH BÁO · PHÁT HIỆN TRUY CẬP TRÁI PHÉP · THIẾT BỊ ĐANG BỊ ĐIỀU KHIỂN TỪ XA · </span><span>⚠ CẢNH BÁO · PHÁT HIỆN TRUY CẬP TRÁI PHÉP · THIẾT BỊ ĐANG BỊ ĐIỀU KHIỂN TỪ XA · </span></div></div>
+
+        <article class="win win-trace" id="winA">
+          <div class="win-bar"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1.5 13.5 3.6v4.1c0 3.2-2.3 5.6-5.5 6.8-3.2-1.2-5.5-3.6-5.5-6.8V3.6L8 1.5Z" fill="#d83a3a"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg><span>Trung tâm bảo mật</span><span class="win-ctl"><i>–</i><i>▢</i><i>✕</i></span></div>
+          <div class="win-body">
+            <svg class="win-icon" viewBox="0 0 48 48" fill="none"><path d="M24 4 40 10v12c0 10-7 17-16 20C15 39 8 32 8 22V10L24 4Z" fill="#d83a3a"/><path d="m17 17 14 14m0-14L17 31" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></svg>
+            <div>
+              <h4>Phát hiện truy cập trái phép</h4>
+              <p id="traceText">Có người đang điều khiển thiết bị của bạn từ xa.</p>
+              <dl><dt>Địa chỉ IP</dt><dd>103.•••.•••.026</dd><dt>Vị trí</dt><dd id="traceLoc">Đang xác định…</dd></dl>
+            </div>
+          </div>
+          <div class="win-foot"><span class="btn">Chi tiết</span><span class="btn btn-primary">Đóng</span></div>
+        </article>
+
+        <article class="win win-enc" id="winB">
+          <div class="win-bar"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.6" fill="#e8b23a"/><path d="M5.2 7V5a2.8 2.8 0 0 1 5.6 0v2" stroke="#e8b23a" stroke-width="1.4"/></svg><span>Mã hóa tệp</span><span class="win-ctl"><i>–</i><i>▢</i><i>✕</i></span></div>
+          <div class="win-body win-body-col">
+            <p class="enc-title">Đang mã hóa <b>4.269</b> tệp trên thiết bị…</p>
+            <div class="bar"><i id="encBar"></i></div>
+            <div class="enc-meta"><b id="encPct">8%</b><span id="encEta">Còn lại 00:07</span></div>
+            <ul class="enc-files" id="encFiles"></ul>
+          </div>
+        </article>
+
+        <article class="win win-main" id="winC">
+          <i class="win-halo" id="haloC"></i>
+          <div class="win-bar win-bar-red"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1.6 15 14H1L8 1.6Z" fill="#fff"/><path d="M8 6v4m0 1.8v.2" stroke="#b3151f" stroke-width="1.5" stroke-linecap="round"/></svg><span>CẢNH BÁO NGHIÊM TRỌNG</span><span class="win-ctl"><i>–</i><i>▢</i><i>✕</i></span></div>
+          <div class="win-main-body">
+            <svg class="main-icon" viewBox="0 0 64 64" fill="none"><path d="M32 6 61 57H3L32 6Z" stroke="#ff5a5f" stroke-width="3.4" stroke-linejoin="round" fill="rgba(255,60,70,.14)"/><path d="M32 25v18" stroke="#ff5a5f" stroke-width="4.4" stroke-linecap="round"/><circle cx="32" cy="50" r="2.9" fill="#ff5a5f"/></svg>
+            <h3 id="hackTitle">BẠN ĐÃ BỊ <strong>HACK!</strong></h3>
+            <p class="main-sub">Toàn bộ dữ liệu đang bị mã hóa… kể cả ảnh selfie.</p>
+            <div class="lock-count"><small>THIẾT BỊ SẼ BỊ KHÓA SAU</small><b id="countdown">00:10:00</b></div>
+            <p class="main-code">Mã lỗi 0x00000026 · KHÔNG THỂ HOÀN TÁC (chắc vậy)</p>
+          </div>
+          <div class="win-foot"><span class="btn">Hủy</span><span class="btn btn-danger">Mở khóa ngay</span></div>
+        </article>
+      </section>
+
+        <div class="red-hacker" id="redHacker" aria-hidden="true">
+          <svg viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="130" cy="287" rx="99" ry="10" fill="#05080e" opacity=".5" />
+            <path d="M88 239q-42 1-45 23-2 19 43 21l58-18q-12-19-56-26Z" fill="#202c3c" stroke="#080c13" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M174 240q40 3 43 23 1 19-41 20l-58-18q15-18 56-25Z" fill="#263347" stroke="#080c13" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M62 276q16-8 33 0l2 9q-21 5-39-1Zm107 0q16-7 32 0l3 9q-19 4-37-1Z" fill="#111a27" stroke="#080c13" stroke-width="3" />
+            <path d="M86 151q-27 7-32 58l19 41q54 18 111-1l20-40q-7-46-34-58l-40 11Z" fill="#19212c" stroke="#080c13" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="m80 154 26 24 24-11 24 11 26-24-13 44-37 13-38-13Z" fill="#6e1c2c" stroke="#0a1019" stroke-width="3" />
+            <path d="m101 183 4 34m52-34-5 34" stroke="#de5967" stroke-width="2.5" stroke-linecap="round" />
+            <g class="red-arm red-arm-left">
+            <path d="M77 173c-15 2-21 20-12 35l15 17q7 7 16 0 7-7 0-15l-12-14q-3-4 1-9Z" fill="#34303d" stroke="#080c13" stroke-width="4" stroke-linejoin="round" />
+            <g transform="translate(-4 11)"><g class="red-hand red-hand-left"><path d="m87 205 41 20q12 5 8 15-4 9-16 4l-39-20q-10-6-5-13 4-7 11-6Z" fill="#262c39" stroke="#080c13" stroke-width="4" stroke-linejoin="round" /></g></g>
+            <path d="m84 210 7 6" stroke="#934256" stroke-width="2.5" stroke-linecap="round" />
+            </g>
+            <g class="red-arm red-arm-right">
+            <path d="M179 173c17-2 29 16 28 31q-1 13-12 17-12 3-16-8l-1-12q0-6-7-11Z" fill="#34303d" stroke="#080c13" stroke-width="4" stroke-linejoin="round" />
+            <g transform="translate(-18 11)"><g class="red-hand red-hand-right"><path d="m193 204-24 19q-10 7-3 15 6 7 16 0l22-18q9-8 1-15-5-4-12-1Z" fill="#262c39" stroke="#080c13" stroke-width="4" stroke-linejoin="round" /></g></g>
+            <path d="m193 212-8 7" stroke="#934256" stroke-width="2.5" stroke-linecap="round" />
+            </g>
+            <g transform="rotate(-4 130 150)">
+            <path d="M53 129Q40 49 83 22q46-30 92 0 43 26 32 107l-23 31H76Z" fill="#7e2334" stroke="#080c13" stroke-width="5" stroke-linejoin="round" />
+            <path d="M64 118q-2-55 66-88 68 33 66 88-16 43-66 46-50-3-66-46Z" fill="#160f19" stroke="#ad3d4d" stroke-width="3" />
+            <path d="M78 93q49-29 105 0l-10 44q-44 28-87-1Z" fill="#a57368" stroke="#080c13" stroke-width="3" />
+            <path d="m84 85 28 12m64-12-28 12" stroke="#17121c" stroke-width="7" stroke-linecap="round" />
+            <path d="m87 98 25 5q-15 9-24 0Zm86 0-25 5q15 9 24 0Z" fill="#ffdccb" />
+            <path d="M104 102v4.5m52-4.5v4.5" stroke="#dc3347" stroke-width="5" stroke-linecap="round" />
+            <path d="M77 111q53 18 106 0l-9 36q-44 29-88-1Z" fill="#101923" stroke="#080c13" stroke-width="3" />
+            <path d="M92 125q37 12 76 0m-71 12q33 11 65 0" fill="none" stroke="#34404c" stroke-width="2" stroke-linecap="round" />
+            <path d="m122 128 6 6-6 6m12 0h7" fill="none" stroke="#d95060" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M60 103q-7-38 19-61m120 61q7-38-19-61" fill="none" stroke="#a83a4e" stroke-width="3" stroke-linecap="round" />
+            <path d="m123 52 7-5 7 5-7 9Z" fill="#be4656" />
+            </g>
+            <!-- The lid's back faces the viewer, so the keyboard is behind it: both forearms run in behind the lid and the hands stay hidden. -->
+            <g class="red-laptop"><path d="M74 268h112q5 0 5 4.5t-5 4.5H74q-5 0-5-4.5t5-4.5Z" fill="#1b2532" stroke="#080c13" stroke-width="3" stroke-linejoin="round" />
+            <path d="M91 199h78q8 0 9 8l3 53q0 8-8 8H87q-8 0-8-8l3-53q1-8 9-8Z" fill="#263343" stroke="#070c14" stroke-width="3.5" stroke-linejoin="round" />
+            <path d="M93 204h74m-81 6-2 48" fill="none" stroke="#647486" stroke-width="1.5" stroke-linecap="round" />
+            <path class="red-gem" d="m130 221 11 9-11 17-11-17Z" fill="#b45568" /><path class="red-gem" d="m124 231 6 4 6-4" fill="none" stroke="#f09aab" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></g>
+          </svg>
+        </div>
+      <div class="actor" id="actor" data-fit="security" aria-hidden="true">
+        <!-- Costume-change light show, drawn behind the mascot; driven frame by frame from story.js -->
+        <div class="morph" id="morph"><i class="morph-rays"></i><i class="morph-beam"></i><i class="morph-ring"></i></div>
+        <svg viewBox="0 0 220 295" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="111" cy="286" rx="77" ry="9" fill="#05111F" opacity=".25" />
+          <path d="M76 230 68 274q20 11 37 0l8-45m3 1 8 43q21 10 35-4l-11-45" fill="#223756" stroke="#0C182A" stroke-width="5" stroke-linejoin="round" />
+          <path d="M60 271q23-12 45 2l-4 10-42-1Zm63 1q23-12 39-1l9 13h-49Z" fill="#FFF9E9" stroke="#172034" stroke-width="4" />
+          <!-- Relaxed elbows and round hands; sleeves overlap the wrists at the shoulder pivots. -->
+          <g id="mGrip">
+            <circle cx="26" cy="170" r="12" fill="#F4CBA8" stroke="#915F50" stroke-width="3" />
+            <path class="m-upper-arm" d="M61 164Q67 171 61 179L38 202Q30 208 23 201Q17 195 24 187L50 165Q55 160 61 164Z" />
+            <path class="m-forearm" d="M17 180Q26 177 36 182l4 16q1 10-9 13-11 2-14-8l-2-14q-1-5 2-9Z" />
+            <!-- Security: glowing wrist band that projects the hologram -->
+            <g class="fit fit-security"><path d="m16 182 20 2" stroke="#15272D" stroke-width="6" stroke-linecap="round" /><path d="m19 180 14 2" stroke="#52EDB3" stroke-width="2.6" stroke-linecap="round" /></g>
+            <path class="fit fit-grad" d="m17 182 19 2" fill="none" stroke="#58c83b" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <g id="mWave">
+            <circle cx="191" cy="153" r="12" fill="#F4CBA8" stroke="#915F50" stroke-width="3" />
+            <path class="m-upper-arm" d="M157 164Q163 162 168 166L198 183Q203 190 196 197Q191 203 183 198L154 180Q147 172 157 164Z" />
+            <path class="m-forearm" d="M181 166q9-4 19-2l5 23q2 12-9 15-12 4-15-8l-4-17q-1-7 4-11Z" />
+            <g class="fit fit-security"><path d="m180 167 21-3" stroke="#15272D" stroke-width="6" stroke-linecap="round" /><path d="m183 165 15-2" stroke="#52EDB3" stroke-width="2.6" stroke-linecap="round" /></g>
+            <path class="fit fit-grad" d="m181 167 19-3" fill="none" stroke="#58c83b" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <path class="m-cloth" d="M79 149q-23 4-35 47l7 44q61 23 119-2l1-45q-5-30-30-42Z" />
+          <path class="m-shoulder-seam" d="M67 164q-10 9-13 23m95-25q12 8 17 23" />
+          <g class="m-shirt"><path d="m93 154 18 46 20-47Z" fill="#F4D5A0" /><path d="m96 165 14 30 11-29-10-14Z" fill="#FFF9EA" /><path d="m106 187 6 35" stroke="#E6BD79" stroke-width="5" stroke-linecap="round" /></g>
+          <!-- Security: hologram hovering over the open hand; fades while the arm lunges -->
+          <g id="mHolo" class="fit fit-security" transform="translate(12 -18)">
+            <defs><linearGradient id="holoBeam" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#27d991" stop-opacity=".42" /><stop offset="1" stop-color="#27d991" stop-opacity="0" /></linearGradient></defs>
+            <g class="holo-glow">
+              <path d="M6 172-22 96H38L36 172Z" fill="url(#holoBeam)" />
+              <ellipse class="holo-ring" cx="14" cy="172" rx="24" ry="6" fill="none" stroke="#27d991" stroke-width="2" stroke-dasharray="7 5" />
+              <g class="holo-float">
+                <path d="M8 98l22 8v16q0 15-22 24-22-9-22-24v-16z" fill="rgba(39,217,145,.16)" stroke="#27d991" stroke-width="2.6" stroke-linejoin="round" />
+                <path d="m-3 124 8.5 8.5L22 114" fill="none" stroke="#9dffd3" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <g class="holo-float holo-float-b">
+                <rect x="-48" y="112" width="26" height="14" rx="4" fill="rgba(39,217,145,.16)" stroke="#27d991" stroke-width="1.6" />
+                <rect x="-41" y="119" width="7.5" height="5.5" rx="1.3" fill="#27d991" /><path d="M-39.5 119v-2.6a2.3 2.3 0 0 1 4.6 0V119" fill="none" stroke="#27d991" stroke-width="1.4" />
+                <path d="M-30 118.5h5M-30 121.5h3" stroke="#9dffd3" stroke-width="1.4" stroke-linecap="round" />
+              </g>
+              <g class="holo-float holo-float-c">
+                <rect x="-52" y="140" width="34" height="14" rx="4" fill="rgba(39,217,145,.16)" stroke="#27d991" stroke-width="1.6" />
+                <text x="-35" y="150" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9dffd3" font-family="ui-monospace,Consolas,monospace">0x7F</text>
+              </g>
+              <g class="holo-float holo-float-b">
+                <rect x="-14" y="70" width="38" height="14" rx="4" fill="rgba(39,217,145,.16)" stroke="#27d991" stroke-width="1.6" />
+                <text x="5" y="80" text-anchor="middle" font-size="7" font-weight="700" fill="#9dffd3" font-family="ui-monospace,Consolas,monospace">SECURE</text>
+              </g>
+            </g>
+          </g>
+
+          <!-- Captain: epaulettes, wings, name plate -->
+          <g class="fit fit-captain">
+            <g stroke="#e8c27a" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M62 172 76 163"/><path d="M60 180 74 171"/><path d="M58 188 72 179"/></g>
+            <g fill="#e8c27a" stroke="#8a6a2a" stroke-width="1"><path d="M108 203Q96 196 84 200Q93 201 97 205Q91 205 87 208Q100 209 108 206Z"/><path d="M114 203Q126 196 138 200Q129 201 125 205Q131 205 135 208Q122 209 114 206Z"/><circle cx="111" cy="204" r="3.6"/></g>
+            <rect x="74" y="219" width="74" height="19" rx="7" fill="#EBC57F" /><text x="111" y="232.5" text-anchor="middle" font-size="11" font-weight="900" fill="#22314A" font-family="system-ui" letter-spacing=".4">CAPT. BẢO</text>
+          </g>
+
+          <!-- Cyber security specialist: cropped techwear shell, stand collar and utility pockets. -->
+          <g class="fit fit-security">
+            <path d="M79 153 110 174 106 243Q75 242 54 234l-5-39q9-32 30-42Z" fill="#243340" />
+            <path d="m139 153-25 21 2 70q29-1 51-10l1-40q-7-30-29-41Z" fill="#304452" />
+            <path d="m81 152 10 23 20-7 20 7 10-23-13-4-17 12-17-12Z" fill="#14232D" stroke="#0B161E" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="m87 157 7 12 8-2m33-10-7 12-8-2" fill="none" stroke="#52EDB3" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M111 176v66" stroke="#101F29" stroke-width="4" /><path d="M112 183v53" stroke="#8FA6AB" stroke-width="1.2" />
+            <rect x="108" y="178" width="6" height="11" rx="2" fill="#C3D4D2" stroke="#14232D" stroke-width="1.4" />
+            <path d="m59 201 29 9-4 18-24-7Zm73 9 27-9-1 21-22 6Z" fill="#1B2C38" stroke="#14232D" stroke-width="2" stroke-linejoin="round" />
+            <path d="m64 205 19 6m54 0 17-6" stroke="#8CA5AB" stroke-width="1.6" stroke-linecap="round" /><path d="m79 211-2 5m64-5 2 5" stroke="#52EDB3" stroke-width="2" stroke-linecap="round" />
+            <path d="m62 174 13-10m74 0 11 12" stroke="#4D6975" stroke-width="5" stroke-linecap="round" /><path d="m63 174 8-6" stroke="#52EDB3" stroke-width="2.5" stroke-linecap="round" />
+            <path d="m135 178 10 3v8q0 7-10 11-10-4-10-11v-8Z" fill="#173F39" stroke="#52EDB3" stroke-width="1.8" /><path d="m130 188 4 4 6-8" fill="none" stroke="#8CFFD1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="m74 184 5 4-5 4m9 0h6" fill="none" stroke="#9BB7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M53 233q58 20 116 0l-1 7q-58 22-114 0Z" fill="#152630" /><path d="M57 238q55 18 108 0" fill="none" stroke="#52EDB3" stroke-width="2.4" stroke-linecap="round" />
+          </g>
+
+          <!-- UIT navy-and-green academic dress, white stole, and a personal ivory sash. -->
+          <g class="fit fit-grad">
+            <path d="m96 152 15 21 16-21" fill="#f9f6eb" />
+            <path d="M111 177v67m-43-41-3 28m92-28 3 28" fill="none" stroke="#10283d" stroke-width="2" stroke-linecap="round" />
+            <path d="m86 153 16 7-10 83-16-5Zm49 0-16 7 10 83 16-5Z" fill="#58c83b" stroke="#287f32" stroke-width="1.4" stroke-linejoin="round" />
+            <path d="m88 153 23 20 25-20" fill="none" stroke="#58c83b" stroke-width="5" stroke-linejoin="round" />
+            <path d="m92 157 8 5-9 61-8 8-1-11Zm37 0-10 5 9 61 8 8 3-11Z" fill="#f8f8ed" stroke="#7792b1" stroke-width="1" stroke-linejoin="round" />
+            <text transform="translate(89 205) rotate(7)" text-anchor="middle" font-size="5.8" font-weight="700" fill="#244a72" font-family="system-ui">UIT</text>
+            <clipPath id="torsoClip"><path d="M79 149q-23 4-35 47l7 44q61 23 119-2l1-45q-5-30-30-42Z" /></clipPath>
+            <g clip-path="url(#torsoClip)">
+              <path d="M72 140 170 242" stroke="#18334a" stroke-width="20" />
+              <path d="M72 140 170 242" stroke="#d5b775" stroke-width="17" />
+              <path d="M72 140 170 242" stroke="#f9f0d9" stroke-width="13" />
+              <text transform="translate(139 210) rotate(46)" text-anchor="middle" dominant-baseline="central" font-size="6.3" font-weight="800" letter-spacing=".3" fill="#1e3b57" font-family="Space Grotesk, system-ui, sans-serif">BẢO · 2026</text>
+              <path d="m103 176 4-2 5 4-5 2Z" fill="#a98a48" /><path d="m105 179 3 3 3-1" fill="none" stroke="#a98a48" stroke-width="1" />
+            </g>
+            <g transform="translate(4 153) rotate(-18 22 17)"><rect x="0" y="0" width="44" height="31" rx="3" fill="#183956" stroke="#d5b775" stroke-width="2" /><path d="M4 4v23m3-3h29" stroke="#d5b775" stroke-width=".8" /><text x="24" y="17" text-anchor="middle" font-size="8" font-weight="700" fill="#ead39a" font-family="system-ui">UIT</text></g>
+          </g>
+
+          <g class="fit fit-security"><path d="M46 116Q38 14 112 10Q186 14 178 116Q160 158 112 160Q64 158 46 116Z" fill="#1b222a" stroke="#0a0e12" stroke-width="4" /></g>
+          <path class="m-hair-back" d="M65 76Q57 31 99 23q52-10 65 41l-2 55-95 2Z" fill="#1A2638" stroke="#0F1826" stroke-width="5" />
+          <ellipse cx="111" cy="98" rx="59" ry="62" fill="#FFD9B7" stroke="#915F50" stroke-width="4" />
+          <path class="m-hair-front" d="M59 81q-2-38 30-43 14-18 41-3 25-4 38 32-9 8-18 9-9-16-18-16-26 22-50 11-6 16-23 10Z" fill="#202738" />
+          <g class="fit fit-grad" fill="#202738">
+            <path d="M60 79q-1-20 14-29l2 31-8 8-5 11Z" />
+            <path d="M147 50q17 9 18 30l-4 20-6-12-8-7Z" />
+          </g>
+          <g id="mFace">
+            <path d="M79 101q10-6 20 0m24 0q10-6 20 0" fill="none" stroke="#273243" stroke-width="5" stroke-linecap="round" />
+            <g class="m-blink"><circle id="mEyeL" cx="91" cy="111" r="5" fill="#1E3449" /><circle id="mEyeR" cx="135" cy="111" r="5" fill="#1E3449" /></g>
+          </g>
+          <ellipse cx="77" cy="128" rx="11" ry="5" fill="#F49E9C" opacity=".52" /><ellipse cx="148" cy="128" rx="11" ry="5" fill="#F49E9C" opacity=".52" />
+          <path id="mSmile" d="M102 133q10 13 24-1" fill="none" stroke="#9A514E" stroke-width="4" stroke-linecap="round" />
+          <ellipse id="mMouth" cx="114" cy="136" rx="9" ry="1" fill="#7A2F3A" stroke="#9A514E" stroke-width="2.5" opacity="0" />
+
+          <!-- Sunglasses start pushed up on the forehead and drop at the key moment -->
+          <g id="mShades" class="fit fit-security">
+            <rect x="70" y="99" width="42" height="26" rx="10" fill="#0b0f14" stroke="#27d991" stroke-width="2" />
+            <rect x="114" y="99" width="42" height="26" rx="10" fill="#0b0f14" stroke="#27d991" stroke-width="2" />
+            <path d="M110 106h6v4h-6zM70 107l-14-3M156 107l14-3" stroke="#27d991" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M76 105h15l-9 15z" fill="#fff" opacity=".16" /><path d="M120 105h15l-9 15z" fill="#fff" opacity=".16" />
+          </g>
+
+          <g class="fit fit-headset">
+            <ellipse cx="53" cy="108" rx="9" ry="15" fill="#2a3b50" stroke="#0e1a2a" stroke-width="3" />
+            <ellipse cx="170" cy="108" rx="9" ry="15" fill="#2a3b50" stroke="#0e1a2a" stroke-width="3" />
+            <path d="M171 122Q172 147 146 151" fill="none" stroke="#0e1a2a" stroke-width="3.5" stroke-linecap="round" />
+            <ellipse cx="141" cy="151" rx="6" ry="4" fill="#0e1a2a" />
+          </g>
+
+          <g id="mHat">
+            <g class="hat hat-captain"><g transform="translate(0 -8)">
+              <path d="M56 72Q52 26 112 22Q172 26 168 72Q112 90 56 72Z" fill="#1d3350" stroke="#0e1a2a" stroke-width="4" stroke-linejoin="round" />
+              <path d="M55 66Q112 86 169 66L170 80Q112 100 54 80Z" fill="#0f1c2d" stroke="#e1bb73" stroke-width="3" />
+              <path d="M58 73Q112 92 166 73" stroke="#e1bb73" stroke-width="2" fill="none" stroke-dasharray="5 4" />
+              <path d="M66 80Q112 100 158 80Q154 93 112 97Q70 93 66 80Z" fill="#0a1320" stroke="#d9b676" stroke-width="2.5" />
+              <g fill="#e8c27a" stroke="#8a6a2a" stroke-width="1.5"><path d="M104 56Q90 49 76 55Q87 56 92 61Q85 60 79 64Q93 65 104 60Z"/><path d="M120 56Q134 49 148 55Q137 56 132 61Q139 60 145 64Q131 65 120 60Z"/><circle cx="112" cy="58" r="8"/></g>
+            </g></g>
+            <g class="hat hat-security">
+              <path d="M52 88Q48 26 112 20Q176 26 172 88Q150 52 112 50Q74 52 52 88Z" fill="#1b222a" stroke="#0a0e12" stroke-width="4" stroke-linejoin="round" />
+              <path d="M58 98Q112 -8 166 98" fill="none" stroke="#0e1a2a" stroke-width="7" stroke-linecap="round" />
+              <path d="M96 36h30" stroke="#27d991" stroke-width="3" stroke-linecap="round" opacity=".9" />
+            </g>
+            <g class="hat hat-grad">
+              <!-- The crown sits behind the board, leaving the forehead visible below it. -->
+              <path d="M73 53q38-18 76 0v25q-38 14-76 0Z" fill="#132f47" stroke="#0c2034" stroke-width="3.4" stroke-linejoin="round" />
+              <path d="m42 52 69 25 69-25v4l-69 25-69-25Z" fill="#0c2338" stroke="#0c2034" stroke-width="2" stroke-linejoin="round" />
+              <path d="m42 52 69-27 69 27-69 25Z" fill="#214560" stroke="#0c2034" stroke-width="3.4" stroke-linejoin="round" />
+              <path d="M111 52q35-5 68 2l8 47" fill="none" stroke="#dfbe7b" stroke-width="1.8" stroke-linecap="round" />
+              <circle cx="111" cy="52" r="2.7" fill="#dfbe7b" />
+              <circle cx="188" cy="105" r="3.7" fill="#dfbe7b" />
+              <path d="m185 110-1 13m4-13v15m3-15 1 13" stroke="#dfbe7b" stroke-width="2" stroke-linecap="round" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="poof" id="poof" aria-hidden="true"></div>
+      <div class="bubble" id="bubble" aria-hidden="true"><span id="bubbleText"></span></div>
+
+      <div class="reveal-title" aria-hidden="true">
+        <div class="reveal-in" id="revealIn">
+          <h2>Một tấm vé tới<br /><em>chương tiếp theo.</em></h2>
+          <p class="flight-note">ĐÃ ĐƯỢC PHÉP CẤT CÁNH · CLASS OF 2026</p>
+        </div>
+      </div>
+
+      <section class="ticket-layer" id="ticket" aria-label="Vé mời lễ tốt nghiệp" aria-hidden="true" inert>
+        <div class="ticket-wrap" id="ticketWrap">
+          <div class="ticket-fly" id="ticketFly">
+            <article class="ticket">
+              <div class="bp-head"><span class="bp-brand"><i>✈</i> GRAD AIRWAYS</span><div class="bp-honor-wrap" id="honorWrap"><button class="bp-honor" id="honor" type="button" aria-expanded="false" aria-controls="honorMessage" aria-label="Khám phá dấu sao trên vé"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9Z" fill="currentColor"/></svg></button><span class="bp-honor-hint" aria-hidden="true">chạm thử nè 👀</span><span id="honorMessage" class="bp-honor-message" role="status" hidden>psst… thủ khoa 2026 🤫</span></div></div>
+              <div class="bp-route">
+                <div class="bp-city"><b>STU</b><small>Student Life</small></div>
+                <svg class="bp-line" viewBox="0 0 120 40" fill="none" aria-hidden="true"><path d="M4 30C34 6 86 6 116 30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/><circle cx="4" cy="30" r="2.6" fill="currentColor"/><circle cx="116" cy="30" r="2.6" fill="#b18d55"/><g class="boarding-plane" transform="translate(48 -1)"><path d="M12 1 9.8 8.6 1.5 13.8v2.8l8.3-2.2 1.7 7.6L12 22l.5-.4 1.7-7.6 8.3 2.2v-2.8l-8.3-5.2L12 1Z" fill="#29475a" transform="rotate(90 12 12)"/></g></svg>
+                <div class="bp-city bp-city-to"><b>FUT</b><small>The Next Chapter</small></div>
+              </div>
+              <div class="bp-grid">
+                <div><small>CHUYẾN BAY</small><b>GRAD-2026</b></div>
+                <div><small>CỔNG</small><b>UIT</b></div>
+                <div><small>GHẾ</small><b>1A</b></div>
+                <div class="bp-time"><small>16/11/2026 · GIỜ LÊN MÁY BAY</small><b>13:00 – 16:00</b></div>
+              </div>
+              <div class="bp-foot">
+                <div><small>HÀNH KHÁCH · PASSENGER</small><b id="ticketGuest">Vị khách đặc biệt</b><em>Cơ trưởng: Lê Quốc Bảo · Liên danh BCU × UIT</em></div>
+                <div class="boarding-mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              </div>
+              <div class="ticket-stamp" id="ticketStamp" aria-hidden="true"><span>ĐÃ DUYỆT</span><small>GRAD · 2026</small></div>
+            </article>
+          </div>
+          <button id="acceptTicket" class="ticket-cta" type="button">Mở vé mời của bạn <span aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+
+      <section class="details" id="details" aria-labelledby="detailsTitle" aria-hidden="true" inert>
+        <div class="arrival-grid">
+          <div class="arrival-intro">
+            <h2 id="detailsTitle" tabindex="-1">Bảo tốt nghiệp<br />rồi nè<span class="arrival-star" aria-hidden="true">✦</span></h2>
+            <p class="details-copy"><span id="detailGuest">Bạn</span> ơi, đến chung vui và chụp với Bảo một tấm hình nhé!</p>
+            <div class="arrival-host"><b>Lê Quốc Bảo</b><span>Chương trình liên kết BCU × UIT</span></div>
+          </div>
+          <div class="arrival-illustration">
+            <div id="arrivalMascot" class="arrival-mascot" aria-hidden="true"></div>
+            <div class="dance-controls" role="group" aria-label="Tư thế của Bảo">
+              <button type="button" data-pose="auto" aria-pressed="true" aria-label="Tự đổi tư thế">Tự động</button>
+              <button type="button" data-pose="sturdy" aria-pressed="false">Sturdy</button>
+              <button type="button" data-pose="freeze" aria-pressed="false">Ke đầu</button>
+            </div>
+          </div>
+          <div class="arrival-content">
+            <div class="ceremony-time"><div class="ceremony-date"><b>16</b><span>11 · 2026</span></div><div><span>Thứ Hai</span><strong>13:00 – 16:00</strong></div></div>
+            <div class="arrival-venue">
+              <h3>Hội trường A</h3>
+              <p>Trường Đại học Công nghệ Thông tin · ĐHQG-HCM (UIT)</p>
+              <p class="arrival-address">Đường Hàn Thuyên, Phường Linh Xuân, TP. Hồ Chí Minh</p>
+              <div class="arrival-links">
+                <a class="venue-map" href="https://www.google.com/maps/search/?api=1&amp;query=Tr%C6%B0%E1%BB%9Dng%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20C%C3%B4ng%20ngh%E1%BB%87%20Th%C3%B4ng%20tin%20%C4%90HQG-HCM" target="_blank" rel="noopener">Mở bản đồ <span aria-hidden="true">↗</span></a>
+                <button id="venueSave" class="venue-save" type="button">Tải thiệp PDF <span aria-hidden="true">↓</span></button>
+              </div>
+              <details class="arrival-route"><summary>Đến trường thế nào?</summary><p>Từ ga Đại học Quốc gia, đi bộ đến Cổng B UIT theo Google Maps. Nếu không rành đường, bạn có thể bắt Grab đến cổng trường. Vào trường, theo bảng chỉ dẫn hoặc hỏi bảo vệ để đến Hội trường A.</p></details>
+            </div>
+          </div>
+            <div class="arrival-rsvp">
+              <h3>Đi cùng Bảo nha?</h3>
+              <div class="actions"><button id="yes" class="yes" type="button">Xác nhận có mặt <span aria-hidden="true">✓</span></button><button id="maybe" class="maybe" type="button">Để mình xem lịch</button></div>
+              <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+              <p class="fineprint">Bấm xác nhận để gửi tên của bạn cho Bảo.</p>
+            </div>
+        </div>
+        <footer class="arrival-footer"><a href="tel:0938030539">Gọi Bảo · 0938 030 539</a><button class="replay" id="replay" type="button"><span aria-hidden="true">↺</span> Xem lại chuyến bay</button></footer>
+      </section>
+
+      <div id="confetti" class="confetti" aria-hidden="true"></div>
+      <p id="announcer" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
