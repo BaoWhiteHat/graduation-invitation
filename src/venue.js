@@ -1,7 +1,7 @@
 // A two-page invitation: the ceremony first, practical directions second.
 export const VENUE = {
   event: 'Lễ tốt nghiệp', host: 'Lê Quốc Bảo', program: 'Chương trình liên kết BCU × UIT',
-  weekday: 'Thứ Hai', date: '16/11/2026', time: '13:00 – 16:00',
+  weekday: 'Thứ Hai', date: '16/11/2026', time: '13:00 – 16:00', photoTime: '15:45',
   hall: 'Hội trường A', school: 'Trường Đại học Công nghệ Thông tin – ĐHQG-HCM (UIT)',
   address: 'Đường Hàn Thuyên, Khu phố 6, Phường Linh Xuân, TP. Hồ Chí Minh',
   oldAddress: 'Địa chỉ cũ trên một số bản đồ: P. Linh Trung, TP. Thủ Đức',
@@ -85,6 +85,7 @@ function drawInvitation(guest) {
   text(VENUE.time, 650, 1173, 42, CREAM, 'left', SANS, '600', 480);
   text(VENUE.hall, 650, 1238, 36, CREAM, 'left', SERIF);
   text('UIT · ĐHQG-HCM', 650, 1288, 26, GOLD);
+  text(`Lễ kéo dài tới khoảng ${VENUE.photoTime}. Bận thì cứ ghé lúc đó để chụp ảnh nhé.`, 110, 1352, 25, CREAM, 'left', SERIF, 'italic', 1020);
   text('Trường Đại học Công nghệ Thông tin', 110, 1400, 29, CREAM);
   text('Đại học Quốc gia TP. Hồ Chí Minh', 110, 1446, 27, CREAM);
   text('Mở Google Maps tới trường', 110, 1533, 28, CREAM, 'left', SANS, '500');

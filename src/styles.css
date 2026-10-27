@@ -850,6 +850,7 @@ html { touch-action: manipulation; overscroll-behavior: none; }
 .ceremony-time > div:last-child { display: grid; gap: 7px; padding-top: 8px; }
 .ceremony-time > div:last-child > span { color: #526a77; font-size: 13px; }
 .ceremony-time strong { font-size: 24px; font-weight: 650; letter-spacing: -.025em; white-space: nowrap; }
+.ceremony-time > div:last-child > .ceremony-photo { max-width: 32ch; color: #405e72; font-size: 12px; line-height: 1.5; }
 .arrival-content h3 { margin: 0 0 8px; color: #19364c; font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.025em; }
 .arrival-venue > p { margin: 0; color: #405e72; font-size: 13px; line-height: 1.6; }
 .arrival-venue > p br { display: none; }
