@@ -25,6 +25,14 @@ npm run build
 
 Vercel lưu và phục vụ bản build; máy tính cá nhân có thể tắt sau khi deploy. Những lần push sau sẽ tạo bản deploy mới qua kết nối GitHub.
 
+## Deploy thử trên GitHub Pages
+
+Workflow `.github/workflows/pages.yml` build và deploy mỗi lần push lên `main`. Trong **Settings → Pages**, chọn **Source: GitHub Actions**, để trống **Custom domain** khi dùng link miễn phí:
+
+https://baowhitehat.github.io/graduation-invitation/
+
+Thêm Repository Variable `VITE_WEB3FORMS_KEY` trong **Settings → Secrets and variables → Actions → Variables** nếu dùng Web3Forms. Biến `VITE_` là cấu hình đưa vào trình duyệt. Workflow dùng đường dẫn `/graduation-invitation/`; build mặc định trên Vercel vẫn dùng `/`.
+
 ## Gửi lời mời riêng
 
 Thêm tên khách vào URL công khai, ví dụ:

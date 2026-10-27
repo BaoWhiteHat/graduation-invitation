@@ -39,7 +39,7 @@ export function createSoundtrack(button) {
   let painted = '';
   // Fetch during check-in; decoding and playback still require a gesture.
   const files = new Map(Object.entries({ ...AUDIO_FILES, music: MUSIC_FILE }).map(([name, url]) => [name,
-    fetch(url).then(response => { if (!response.ok) throw Error(`Audio ${response.status}`); return response.arrayBuffer(); }).catch(() => null)
+    fetch(`${import.meta.env.BASE_URL}${url.slice(1)}`).then(response => { if (!response.ok) throw Error(`Audio ${response.status}`); return response.arrayBuffer(); }).catch(() => null)
   ]));
 
   function paint() {
